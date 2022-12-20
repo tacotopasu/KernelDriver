@@ -10,7 +10,7 @@ PLOAD_IMAGE_NOTIFY_ROUTINE ImageLoadCallback(PUNICODE_STRING FullImageName, HAND
 	if (wcsstr(FullImageName->Buffer, L"\\VRChat\\UnityPlayer.dll"))
 	{
 		DebugMessage("TACO KERNEL DRIVER // VRChat UnityPlayer.dll found!\n");
-		VRChatClientDLLAdress = ImageInfo->ImageBase;
+		GameClientDLLAddress = ImageInfo->ImageBase;
 
 		DebugMessage("TACO KERNEL DRIVER // VRChat Process ID: %d \n", ProcessId);
 	}

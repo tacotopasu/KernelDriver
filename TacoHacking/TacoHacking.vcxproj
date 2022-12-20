@@ -153,12 +153,14 @@
     <FilesToPackage Include="$(TargetPath)" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="communication.h" />
     <ClInclude Include="data.h" />
     <ClInclude Include="events.h" />
     <ClInclude Include="messages.h" />
     <ClInclude Include="tacohacking.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="communication.c" />
     <ClCompile Include="events.c" />
     <ClCompile Include="tacohacking.c" />
   </ItemGroup>
