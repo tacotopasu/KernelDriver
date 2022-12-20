@@ -1,5 +1,7 @@
+#pragma warning(disable: 4022)
 #include "communication.h"
 #include "messages.h"
+#include "memory.h"
 #include "data.h"
 
 NTSTATUS CreateCall(PDEVICE_OBJECT DeviceObject, PIRP Irp)
@@ -44,6 +46,28 @@ NTSTATUS IoControl(PDEVICE_OBJECT DeviceObject, PIRP Irp)
 		DebugMessage("TACO KERNEL DRIVER // ClientAddress requested!\n");
 		Status = STATUS_SUCCESS;
 		ByteIO = sizeof(*Output);
+	}
+	else if (ControlCode == IO_READ_REQUEST)
+	{
+		PKERNEL_READ_REQUEST ReadInput = (PKERNEL_READ_REQUEST)Irp->AssociatedIrp.SystemBuffer;
+		PEPROCESS Process;
+		if (NT_SUCCESS(PsLookupProcessByProcessId(ReadInput->ProcessId, &Process)))
+		{
+			KernelReadVirtualMemory(Process, ReadInput->Address, ReadInput->pBuff, ReadInput->Size);
+			Status = STATUS_SUCCESS;
+			ByteIO = sizeof(KERNEL_READ_REQUEST);
+		}
+	}
+	else if (ControlCode == IO_WRITE_REQUEST)
+	{
+		PKERNEL_WRITE_REQUEST WriteInput = (PKERNEL_WRITE_REQUEST)Irp->AssociatedIrp.SystemBuffer;
+		PEPROCESS Process;
+		if (NT_SUCCESS(PsLookupProcessByProcessId(WriteInput->ProcessId, &Process)))
+		{
+			KernelWriteVirtualMemory(Process, WriteInput->pBuff, WriteInput->Address, WriteInput->Size);
+			Status = STATUS_SUCCESS;
+			ByteIO = sizeof(KERNEL_WRITE_REQUEST);
+		}
 	}
 	else
 	{

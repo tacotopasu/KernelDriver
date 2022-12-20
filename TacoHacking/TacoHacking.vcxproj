@@ -156,12 +156,14 @@
     <ClInclude Include="communication.h" />
     <ClInclude Include="data.h" />
     <ClInclude Include="events.h" />
+    <ClInclude Include="memory.h" />
     <ClInclude Include="messages.h" />
     <ClInclude Include="tacohacking.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="communication.c" />
     <ClCompile Include="events.c" />
+    <ClCompile Include="memory.c" />
     <ClCompile Include="tacohacking.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
